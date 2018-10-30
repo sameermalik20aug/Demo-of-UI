@@ -1,6 +1,8 @@
 package com.example.samee.demouiux;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,15 +20,28 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.gallerylibrary.Sgallery;
+
+import java.util.ArrayList;
+
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+        ArrayList<String> imagepath = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        imagepath.add(getURLForResource(R.drawable.pic1));
+        imagepath.add(getURLForResource(R.drawable.pic2));
+        imagepath.add(getURLForResource(R.drawable.pic3));
+        imagepath.add(getURLForResource(R.drawable.pic4));
+        imagepath.add(getURLForResource(R.drawable.pic5));
+        imagepath.add(getURLForResource(R.drawable.pic6));
+        imagepath.add(getURLForResource(R.drawable.pic7));
+        imagepath.add(getURLForResource(R.drawable.pic8));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,8 +136,11 @@ public class Main2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+
+            Sgallery.S(Main2Activity.this,imagepath,3);
 
         }
         else if (id == R.id.nav_manage) {
@@ -136,5 +154,8 @@ public class Main2Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public String getURLForResource (int resourceId) {
+        return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId).toString();
     }
 }
